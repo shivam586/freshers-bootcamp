@@ -29,11 +29,14 @@ func (root *Node) PostOrderTraversal() {
 func main(){
 	root := Node{"-",nil,nil}
 	root.left = &Node{"a",nil,nil}
+
 	root.right = &Node{"+",nil,nil}
 	root.right.left = &Node{"b",nil,nil}
 	root.right.right = &Node{"c",nil,nil}
+
 	fmt.Println("Preorder Traversal")
 	root.PreOrderTraversal()
+	fmt.Println(root.value)
 	fmt.Println("Post order traversal")
 	root.PostOrderTraversal()
 

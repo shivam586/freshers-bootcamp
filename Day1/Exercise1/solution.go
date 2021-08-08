@@ -1,13 +1,13 @@
 package main
 
 import (
-	"fmt"
-	"encoding/json"
+    "encoding/json"
+    "fmt"
 )
 
 type Matrix struct {
     row,col int
-	mat [][]int
+	data [][]int
 }
 func GetRows(row,col int) int{
     getrow := Matrix{row: row, col: col}
@@ -19,69 +19,69 @@ func GetColumns(row,col int) int{
     return getcol.col
 }
 func AddingMatrices(row,col int) *Matrix {
-    mat1:= make([][]int, row, col)
-    mat2:= make([][]int, row, col)
-     m := Matrix{row: row, col: col, mat: mat1}
-    n := Matrix{row: row, col: col, mat: mat1}
-     add :=  Matrix{row: row, col: col, mat:mat2}
+    matrix1:= make([][]int, row, col)
+    matrix2:= make([][]int, row, col)
+     left := Matrix{row: row, col: col, data: matrix1}
+    right := Matrix{row: row, col: col, data: matrix1}
+     add :=  Matrix{row: row, col: col, data:matrix2}
     for i := 0; i < row; i++ {
-        m.mat[i] = make([]int, col)
+        left.data[i] = make([]int, col)
         for j := 0; j < col; j++ {
-         m.mat[i][j] = i+j
+         left.data[i][j] = i+j
         }
     }
     for i := 0; i < row; i++ {
-        n.mat[i] = make([]int, col)
+        right.data[i] = make([]int, col)
         for j := 0; j < col; j++ {
-           n.mat[i][j] = i+j
+           right.data[i][j] = i+j
         }
     }
     for i := 0; i < row; i++ {
-        add.mat[i] = make([]int, col)
+        add.data[i] = make([]int, col)
         for j := 0; j < col; j++ {
-            add.mat[i][j] = m.mat[i][j] + n.mat[i][j]
+            add.data[i][j] = left.data[i][j] + right.data[i][j]
         }
     }
     return &add
 }
 func SetMatrixElements(row,col int) *Matrix {
-    mat4 :=make([][]int, row, col)
-    p := Matrix{row: row, col: col,mat: mat4}
-    for i := 0; i < row; i++ {
-        p.mat[i] = make([]int, 3)
-        for j := 0; j < col; j++ {
-            fmt.Scanln(&p.mat[i][j])
+    matrix4 :=make([][]int, row, col)
+    setdata := Matrix{row: row, col: col,data: matrix4}
+    for i:=0 ; i<row ; i++ {
+        setdata.data[i] = make([]int, col)
+        for j:=0 ; j<col ; j++ {
+            setdata.data[i][j] = 1
         }
     }
-  return &p
+  return &setdata
 }
 
 func Printinjson(row,col int) {
     roww := row
     coll := col
-   l :=SetMatrixElements(roww,coll)
-   hey,err := json.MarshalIndent(l,"","  ")
+   format:=SetMatrixElements(roww,coll)
+   value,err := json.Marshal(format)
    if err!= nil {
        fmt.Println(err)
    }
-   fmt.Println(hey)
+   fmt.Println(value)
 
-fmt.Println("Elements", l)
+fmt.Println("Elements", format)
 }
 
 
 func main() {
  fmt.Println("Enter tne number of rows ")
- var r int
- fmt.Scanln(&r)
+ var rowsinput int
+ fmt.Scanln(&rowsinput)
  fmt.Println("Enter tne number of columns ")
- var c int
- fmt.Scanln(&c)
- fmt.Println("Number of Rows", GetRows(r,c))
- fmt.Println("Number of columns", GetColumns(r,c))
- set := SetMatrixElements(r,c)
- fmt.Println(set.mat)
- added := AddingMatrices(r,c)
- fmt.Println(added.mat)
- Printinjson(r,c)
+ var columninput int
+ fmt.Scanln(&columninput)
+ fmt.Println("Number of Rows", GetRows(rowsinput,columninput))
+ fmt.Println("Number of columns", GetColumns(rowsinput,columninput))
+ set := SetMatrixElements(rowsinput,columninput)
+ fmt.Println(set.data)
+ added := AddingMatrices(rowsinput,columninput)
+ fmt.Println(added.data)
+ Printinjson(rowsinput,columninput)
 }
